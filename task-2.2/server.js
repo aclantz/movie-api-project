@@ -5,7 +5,7 @@ const http = require("http"),
 http
   .createServer((request, response) => {
     let addr = request.url,
-      q = new URL(addr, "http//localhost:8080"),
+      q = new URL(addr, "http://localhost:8080"),
       filePath = "";
 
     //creating a log for server requests, appending them to log.txt
@@ -23,9 +23,9 @@ http
 
     //returns documentation file if requested
     if (q.pathname.includes("documentation")) {
-      filePath = __dirname + "/documentation.html";
+      filePath = __dirname + "/../documentation.html";
     } else {
-      filePath = "index.html";
+      filePath = "../index.html";
     }
 
     //retrieves the files requested
@@ -33,11 +33,12 @@ http
       if (err) {
         throw err;
       }
+      response.writeHead(200, { "Content-Type": "text/html" });
+      response.write(data);
+      response.end("Hello Node!\n");
     });
 
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.write(data);
-    response.end("Hello Node!\n");
+  
   })
   .listen(8080);
 
