@@ -1,9 +1,8 @@
 const express = require("express"),
   morgan = require("morgan"),
-  app = express(),
-  morgan = morgan();
+  app = express();
 
-//movie array for res.json (task-2.4)
+//movie array for res.json (task-2.4) 
 let topMovies = [
   {
     title: "The Lord of the Rings",
@@ -47,14 +46,11 @@ let topMovies = [
   },
 ];
 
-//create log
-const accessLogStream = fs.createLogStream(path.join(__dirname, "log.txt"));
+//request log
+app.use(morgan, ('common'));
 
-//calling middleware functions
-app.use(morgan("combined", { stream: "accessLogStream" }));
-app.use((err, req, res, next) => {
-  console.log(err.stack);
-});
+//Static file route
+app.use(express.static("public"));
 
 //GET routes
 app.get("/movies", (req, res) => {
@@ -64,5 +60,12 @@ app.get("/", (req, res) => {
   res.send("I love watching movies!");
 });
 
-//Static file route
-app.use(express.static("public"));
+//error handler
+app.use((err, req, res, next) => {
+    console.log(err.stack);
+  });
+
+//listen for requests
+app.listen(8080, () => {
+    console.log('Your app is listening on port 8080');
+});
