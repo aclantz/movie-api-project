@@ -47,7 +47,7 @@ let topMovies = [
 ];
 
 //request log
-app.use(morgan, ('common'));
+app.use(morgan('common'));
 
 //Static file route
 app.use(express.static("public"));
