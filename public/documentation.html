@@ -15,5 +15,77 @@
       will be able to sign up, update their personal information, and create a
       list of their favorite movies.
     </p>
+    <h3>Movies</h3>
+    <table>
+      <tr>
+        <td>Request</td>
+        <td>Method</td>
+        <td>URL</td>
+        <td>Response</td>
+      </tr>
+      <tr>
+        <td>Return list of all movies.</td>
+        <td>GET</td>
+        <td>Movies/</td>
+        <td>res.json Movies list</td>
+      </tr>
+      <tr>
+        <td>Return data about specific movie</td>
+        <td>GET</td>
+        <td>movies/:movie</td>
+        <td>res.json movie obj</td>
+      </tr>
+      <tr>
+        <td>Return data about a genre</td>
+        <td>GET</td>
+        <td>Movies/:genre</td>
+        <td>res.json genre list</td>
+      </tr>
+      <tr>
+        <td>Return data about a director</td>
+        <td>GET</td>
+        <td>movies/:director</td>
+        <td>res.json director obj</td>
+      </tr>
+    </table>
+    <h3>Users</h3>
+    <table>
+      <tr style="font-weight: strong;">
+        <td>Request</td>
+        <td>Method</td>
+        <td>URL</td>
+        <td>Response</td>
+      </tr>
+      <tr>
+        <td>Register a new user</td>
+        <td>POST</td>
+        <td>users/</td>
+        <td>res.json user obj</td>
+      </tr>
+      <tr>
+        <td>Update user info</td>
+        <td>PATCH</td>
+        <td>users/id</td>
+        <td>confirmation message</td>
+      </tr>
+      <tr>
+        <td>User save movie to favorite list</td>
+        <td>PATCH</td>
+        <td>users/id/favorites</td>
+        <td>confirmation message</td>
+      </tr>
+      <tr>
+        <td>User removie moies from favorite list</td>
+        <td>DELETE</td>
+        <td>user/id/favorites</td>
+        <td>confirmation message</td>
+      </tr>
+      <tr>
+        <td>User to deregister</td>
+        <td>DELETE</td>
+        <td>users/</td>
+        <td>confirmation message</td>
+      </tr>
+    </table>
   </body>
 </html>
