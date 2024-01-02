@@ -70,17 +70,17 @@ let movies = [
 let users = [
   {
     name: 'Sam',
-    id:'',
+    id:'1',
     favoriteMovies: ['The Birdcage', 'Midsommar'],
   },
   {
     name: 'Joe',
-    id:'',
+    id:'2',
     favoriteMovies: ['Interstellar'],
   },
   {
     name: 'Dan',
-    id:'',
+    id:'3',
     favoriteMovies: [],
   }
 ];
@@ -96,7 +96,7 @@ app.get('/movies', (req, res) => {
 //READ, return data about specific movie ** endpoint didn't work
 app.get('/movies/:title', (req, res) => {
   const { title } = req.params;
-  const movie = movies.find( movie => movie.title === title);
+  const movie = movies.find( movie => movies.title === title);
 
   if(movie) {
     return res.status(200).json(movie);
@@ -130,7 +130,7 @@ app.get('movies/Director/:directorName', (req, res) => {
 })
 
 //CREATE, register a new user
-app.post('users/', (req, res) => {
+app.post('/users', (req, res) => {
   const newUser = req.body;
 
   if (newUser.name) {
@@ -174,7 +174,7 @@ app.put('/user/:id/:movieTitle', (req, res) => {
 
 
 //DELETE, remove movie from user favoriteMovies array
-app.put('/user/:id/:movieTitle', (req, res) => {
+app.delete('/user/:id/:movieTitle', (req, res) => {
   const { id, movieTitle } = req.params;
 
   let user = users.find( user => user.id == id);
@@ -188,7 +188,7 @@ app.put('/user/:id/:movieTitle', (req, res) => {
 });
 
 //DELETE, deregister a user
-app.put('/user/:id', (req, res) => {
+app.delete('/user/:id', (req, res) => {
   const { id } = req.params;
 
   let user = users.find( user => user.id == id); 
@@ -202,9 +202,9 @@ app.put('/user/:id', (req, res) => {
 });
 
 //error handler
-app.use((err, req, res, next) => {
-  console.log(err.stack);
-});
+// app.use((err, req, res, next) => {
+//   console.log(err.stack);
+// });
 
 //listen for requests
 app.listen(8080, () => {
