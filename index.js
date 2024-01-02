@@ -1,5 +1,4 @@
 const express = require("express"),
-  morgan = require("morgan"),
   bodyParser = require('body-parser'),
   uuid = require('uuid'),
   app = express();
@@ -94,7 +93,7 @@ app.get('/movies', (req, res) => {
   res.status(200).json(movies);
 });
 
-//READ, return data about specific movie ** endpoint didnt work
+//READ, return data about specific movie ** endpoint didn't work
 app.get('/movies/:title', (req, res) => {
   const { title } = req.params;
   const movie = movies.find( movie => movie.title === title);
@@ -106,7 +105,7 @@ app.get('/movies/:title', (req, res) => {
   }
 });
 
-//READ, return data about genres
+//READ, return data about genres **
 app.get('/movies/Genre/:genreName', (req, res) => {
   const { genreName } = req.params;
   const genre = movies.find( movie => movies.Genre.Name = genreName).genre ;
@@ -118,7 +117,7 @@ app.get('/movies/Genre/:genreName', (req, res) => {
   }
 })
 
-//READ, return data about director
+//READ, return data about director **
 app.get('movies/Director/:directorName', (req, res) => {
   const { directorName } = req.params;
   const director = movies.find( movie => movies.Director.Name = directorName).Director;
