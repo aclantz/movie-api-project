@@ -4,88 +4,104 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>movie-api-project</title>
+    <style>
+      table {
+        table-layout: fixed;
+        width: auto;
+        margin-left: 10px;
+        border-collapse: collapse;
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 10px;
+      }
+    </style>
   </head>
   <body>
     <h1>Movie API Project</h1>
     <h3>CF Full-Stack Immersion Achievement 2</h3>
     <p>
-      <strong>Objective:</strong><br/>To build the server-side component of a
+      <strong>Application Objective:</strong><br />To build the server-side component of a
       “movies” web application. The web application will provide users with
       access to information about different movies, directors, and genres. Users
       will be able to sign up, update their personal information, and create a
       list of their favorite movies.
     </p>
-    <h3>Movies</h3>
+    <h3>HTTP Requests and Responses:</h3>
     <table>
-      <tr>
-        <td>Request</td>
-        <td>Method</td>
-        <td>URL</td>
-        <td>Response</td>
-      </tr>
-      <tr>
-        <td>Return list of all movies.</td>
-        <td>GET</td>
-        <td>Movies/</td>
-        <td>res.json Movies list</td>
-      </tr>
-      <tr>
-        <td>Return data about specific movie</td>
-        <td>GET</td>
-        <td>movies/:movie</td>
-        <td>res.json movie obj</td>
-      </tr>
-      <tr>
-        <td>Return data about a genre</td>
-        <td>GET</td>
-        <td>Movies/:genre</td>
-        <td>res.json genre list</td>
-      </tr>
-      <tr>
-        <td>Return data about a director</td>
-        <td>GET</td>
-        <td>movies/:director</td>
-        <td>res.json director obj</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Request</th>
+          <th>Method</th>
+          <th>URL</th>
+          <th>Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Return list of all movies.</td>
+          <td>GET</td>
+          <td>/movies</td>
+          <td>res.json(movies)</td>
+        </tr>
+        <tr>
+          <td>Return data about specific movie</td>
+          <td>GET</td>
+          <td>/movies/:title</td>
+          <td>res.json(movie)</td>
+        </tr>
+        <tr>
+          <td>Return data about a genre</td>
+          <td>GET</td>
+          <td>/movies/Genre/:genreName</td>
+          <td>res.json(genre)</td>
+        </tr>
+        <tr>
+          <td>Return data about a director</td>
+          <td>GET</td>
+          <td>/movies/Director/:directorName</td>
+          <td>res.json(director)</td>
+        </tr>
+        <tr>
+          <td>Request</td>
+          <td>Method</td>
+          <td>URL</td>
+          <td>Response</td>
+        </tr>
+        <tr>
+          <td>Register a new user</td>
+          <td>POST</td>
+          <td>/users</td>
+          <td>res.json(user)</td>
+        </tr>
+        <tr>
+          <td>Update user info</td>
+          <td>PATCH</td>
+          <td>/users/:id</td>
+          <td>res.json(user)</td>
+        </tr>
+        <tr>
+          <td>User save movie to favorite list</td>
+          <td>PATCH</td>
+          <td>/users/:id/:movieTitle</td>
+          <td>confirmation message</td>
+        </tr>
+        <tr>
+          <td>User removie moies from favorite list</td>
+          <td>DELETE</td>
+          <td>/users/:id/:movieTitle</td>
+          <td>confirmation message</td>
+        </tr>
+        <tr>
+          <td>User to deregister</td>
+          <td>DELETE</td>
+          <td>/users/:id</td>
+          <td>confirmation message</td>
+        </tr>
+      </tbody>
     </table>
-    <h3>Users</h3>
-    <table>
-      <tr style="font-weight: strong;">
-        <td>Request</td>
-        <td>Method</td>
-        <td>URL</td>
-        <td>Response</td>
-      </tr>
-      <tr>
-        <td>Register a new user</td>
-        <td>POST</td>
-        <td>users/</td>
-        <td>res.json user obj</td>
-      </tr>
-      <tr>
-        <td>Update user info</td>
-        <td>PATCH</td>
-        <td>users/id</td>
-        <td>confirmation message</td>
-      </tr>
-      <tr>
-        <td>User save movie to favorite list</td>
-        <td>PATCH</td>
-        <td>users/id/favorites</td>
-        <td>confirmation message</td>
-      </tr>
-      <tr>
-        <td>User removie moies from favorite list</td>
-        <td>DELETE</td>
-        <td>user/id/favorites</td>
-        <td>confirmation message</td>
-      </tr>
-      <tr>
-        <td>User to deregister</td>
-        <td>DELETE</td>
-        <td>users/</td>
-        <td>confirmation message</td>
-      </tr>
-    </table>
+    <h3>Request and Response Breakdown:</h3>
+
   </body>
 </html>
