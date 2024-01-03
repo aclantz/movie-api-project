@@ -6,7 +6,7 @@ const express = require("express"),
 //bonus task 2.5
 let movies = [
   {
-    Name: 'The Lord of the Rings: Return of the King',
+    Title: 'The Lord of the Rings: Return of the King',
     Director: {
       Name: 'Peter Jackson',
       Birthday: '10/31/1961'
@@ -18,7 +18,7 @@ let movies = [
     }
   },
   {
-    Name: 'The Birdcage',
+    Title: 'The Birdcage',
     Director: {
       Name: 'Mike Nichols',
       Birthday: ''
@@ -30,7 +30,7 @@ let movies = [
     }  
   },
   {
-    Name: 'Interstellar',
+    Title: 'Interstellar',
     Director: {
       Name: 'Christopher Nolan',
       Birthday: ''
@@ -42,7 +42,7 @@ let movies = [
     }
   },
   {
-    Name: 'Midsommar',
+    Title: 'Midsommar',
     Director: {
       Name: 'Ari Aster',
       Birthday: ''
@@ -54,9 +54,9 @@ let movies = [
     }
   },
   {
-    Name: 'Pride and Prejudice',
+    Title: 'Pride and Prejudice',
     Director: {
-      Name: 'Joe Wright',
+      Name: 'Joe',
       Birthday: ''
     },
     Year: '2005',
@@ -93,22 +93,22 @@ app.get('/movies', (req, res) => {
   res.status(200).json(movies);
 });
 
-//READ, return data about specific movie ** endpoint didn't work
+//READ, return data about specific movie ** not returning correct movie
 app.get('/movies/:title', (req, res) => {
   const { title } = req.params;
-  const movie = movies.find( movie => movies.title === title);
+  const movie = movies.find( movie => movie.Title === title);
 
   if(movie) {
-    return res.status(200).json(movie);
+    res.status(200).json(movie);
   } else {
     res.status(400).send('no movie found');
   }
 });
 
-//READ, return data about genres **
-app.get('/movies/Genre/:genreName', (req, res) => {
+//READ, return data about genres 
+app.get('/movies/genre/:genreName', (req, res) => {
   const { genreName } = req.params;
-  const genre = movies.find( movie => movies.Genre.Name = genreName).genre ;
+  const genre = movies.find( movie => movie.Genre.Name === genreName).Genre ;
 
   if(genre) {
     return res.status(200).json(genre);
@@ -118,9 +118,9 @@ app.get('/movies/Genre/:genreName', (req, res) => {
 })
 
 //READ, return data about director **
-app.get('movies/Director/:directorName', (req, res) => {
+app.get('/movies/director/:directorName', (req, res) => {
   const { directorName } = req.params;
-  const director = movies.find( movie => movies.Director.Name = directorName).Director;
+  const director = movies.find( movie => movie.Director.Name === directorName).Director ;
 
   if(director) {
     return res.status(200).json(director);
@@ -143,7 +143,7 @@ app.post('/users', (req, res) => {
 });
 
 //UPDATE, change user name
-app.put('/user/:id', (req, res) => {
+app.put('/users/:id', (req, res) => {
   const { id } = req.params;
   const updatedUser = req.body;
 
@@ -159,14 +159,14 @@ app.put('/user/:id', (req, res) => {
 
 
 //UPDATE, add movie to user favoriteMovies array 
-app.put('/user/:id/:movieTitle', (req, res) => {
+app.put('/users/:id/:movieTitle', (req, res) => {
   const { id, movieTitle } = req.params;
 
   let user = users.find( user => user.id == id);
 
   if (user) {
     user.favoriteMovies.push(movieTitle);
-    res.status(200).send('$(movieTitle) has been added to favoriteMovies list for user $(id)');
+    res.status(200).send('Movie has been added to favoriteMovies list for user');
   } else {
     res.status(400).send('no such user');
   }
@@ -174,7 +174,7 @@ app.put('/user/:id/:movieTitle', (req, res) => {
 
 
 //DELETE, remove movie from user favoriteMovies array
-app.delete('/user/:id/:movieTitle', (req, res) => {
+app.delete('/users/:id/:movieTitle', (req, res) => {
   const { id, movieTitle } = req.params;
 
   let user = users.find( user => user.id == id);
@@ -188,7 +188,7 @@ app.delete('/user/:id/:movieTitle', (req, res) => {
 });
 
 //DELETE, deregister a user
-app.delete('/user/:id', (req, res) => {
+app.delete('/users/:id', (req, res) => {
   const { id } = req.params;
 
   let user = users.find( user => user.id == id); 
