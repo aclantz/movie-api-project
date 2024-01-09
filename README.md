@@ -1,5 +1,5 @@
 # Movie API 
-## CF Full-Stack Immersion Achievemnt 2
+## CF Full-Stack Immersion Achievement 2
 
 ### Description
 My objective is to build the server-side component of a “movies” web application. The web
