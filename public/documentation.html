@@ -35,6 +35,7 @@
     </p>
     <h3>HTTP Requests and Responses:</h3>
     <table>
+      <!--Initial Table-->
       <thead>
         <tr>
           <th>Request</th>
@@ -59,13 +60,13 @@
         <tr>
           <td>Return data about a genre</td>
           <td>GET</td>
-          <td>/movies/Genre/:genreName</td>
+          <td>/movies/genre/:genreName</td>
           <td>res.json(genre)</td>
         </tr>
         <tr>
           <td>Return data about a director</td>
           <td>GET</td>
-          <td>/movies/Director/:directorName</td>
+          <td>/movies/director/:directorName</td>
           <td>res.json(director)</td>
         </tr>
         <tr>
@@ -77,25 +78,25 @@
         <tr>
           <td>Update user info</td>
           <td>PUT</td>
-          <td>/users/:id</td>
-          <td>res.json(user)</td>
+          <td>/users/:username</td>
+          <td>res.json(updatedUser)</td>
         </tr>
         <tr>
           <td>User save movie to favorite list</td>
           <td>PUT</td>
-          <td>/users/:id/:movieTitle</td>
-          <td>confirmation message</td>
+          <td>/users/:username/movies/:movieID</td>
+          <td>res.json(updatedUser)</td>
         </tr>
         <tr>
           <td>User removes movies from favorite list</td>
           <td>DELETE</td>
-          <td>/users/:id/:movieTitle</td>
-          <td>confirmation message</td>
+          <td>/users/:username/movies/:movieID</td>
+          <td>res.json(updatedUser)</td>
         </tr>
         <tr>
           <td>User to deregister</td>
           <td>DELETE</td>
-          <td>/users/:id</td>
+          <td>/users/:username</td>
           <td>confirmation message</td>
         </tr>
       </tbody>
@@ -120,24 +121,30 @@
         </ul>
         <li>Response:</li>
         <ul>
-          <li>Status: 200</li>
+          <li>Status: 201</li>
           <li>Format: JSON</li>
           <li>
             Example:
             <pre>
             [
-              {
-                "Name": "The Lord of the Rings: Return of the King",
-                "Director": {
-                    "Name": "Peter Jackson",
-                    "Birthday": "10/31/1961"
-                },
-                "Year": "2003",
-                "Genre": {
-                    "Name": "Fantasy",
-                    "Description": "A category of film or TV that shows fictional fantastical stories"
-                }
+            {
+              "Genre": {
+                  "Name": "Thriller",
+                  "Description": "A genre that invloves excitement and suspence in the audience."
               },
+              "Director": {
+                  "Name": "Jonathan Demme",
+                  "Bio": "RObert Jonathan Demme was an American director, porducer, and screenwritter.",
+                  "Birth": "1944",
+                  "Death": "2017"
+              },
+              "Actors": [],
+              "_id": "6598598232af30fe9ba4038f",
+              "Title": "Silence of the Lambs",
+              "Description": "A young FBI cadet trusts a cannibal killer.",
+              "ImagePath": "silonceofthelambs.png",
+              "Featured": true
+          },
               {
                 ...
               },
@@ -145,7 +152,8 @@
                 ...
               }
             ]
-          </pre>
+          </pre
+            >
           </li>
         </ul>
       </ul>
@@ -155,9 +163,7 @@
       <ul>
         <li>Description:</li>
         <ul>
-          <li>
-            Return details on one movie in a JSON format
-          </li>
+          <li>Return details on one movie in a JSON format</li>
         </ul>
         <li>URL Endpoint: /movies/:title</li>
         <li>Requests:</li>
@@ -174,20 +180,29 @@
             Example:
             <pre>
             [
-              {
-                "Name": "The Lord of the Rings: Return of the King",
-                "Director": {
-                    "Name": "Peter Jackson",
-                    "Birthday": "10/31/1961"
-                },
-                "Year": "2003",
-                "Genre": {
-                    "Name": "Fantasy",
-                    "Description": "A category of film or TV that shows fictional fantastical stories"
-                }
-              }
+            {
+              "Genre": {
+                  "Name": "Science Fiction",
+                  "Description": "Science fiction films are those that often use speculative, futuristic concepts, advanced technology, and other supernatural elements not found in reality."
+              },
+              "Director": {
+                  "Name": "Christopher Nolan",
+                  "Bio": "A popular film director who hates oranges.",
+                  "Birth": "1970"
+              },
+              "_id": "6599751532af30fe9ba40391",
+              "Title": "Inception",
+              "Description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+              "ImagePath": "inception.png",
+              "Actors": [
+                  "Leonardo DiCaprio",
+                  "Ellen Page"
+              ],
+              "Featured": true
+          }
             ]
-          </pre>
+          </pre
+            >
           </li>
         </ul>
       </ul>
@@ -197,11 +212,9 @@
       <ul>
         <li>Description:</li>
         <ul>
-          <li>
-            Return the data pertaining to a specific genre
-          </li>
+          <li>Return the data pertaining to a specific genre</li>
         </ul>
-        <li>URL Endpoint: /movies/Genre/:genreName</li>
+        <li>URL Endpoint: /movies/genre/:genreName</li>
         <li>Requests:</li>
         <ul>
           <li>Method: GET</li>
@@ -216,7 +229,8 @@
             Example:
             <pre>
               ...
-          </pre>
+          </pre
+            >
           </li>
         </ul>
       </ul>
@@ -226,11 +240,9 @@
       <ul>
         <li>Description:</li>
         <ul>
-          <li>
-            Return the data pertaining to a specific director
-          </li>
+          <li>Return the data pertaining to a specific director</li>
         </ul>
-        <li>URL Endpoint: /movies/Director/:directorName</li>
+        <li>URL Endpoint: /movies/director/:directorName</li>
         <li>Requests:</li>
         <ul>
           <li>Method: GET</li>
@@ -245,7 +257,8 @@
             Example:
             <pre>
             ...
-          </pre>
+          </pre
+            >
           </li>
         </ul>
       </ul>
@@ -255,9 +268,7 @@
       <ul>
         <li>Description:</li>
         <ul>
-          <li>
-            Register a new user, by adding data to the users array
-          </li>
+          <li>Register a new user, by adding data to the users array</li>
         </ul>
         <li>URL Endpoint: /users</li>
         <li>Requests:</li>
@@ -265,11 +276,18 @@
           <li>Method: POST</li>
           <li>Query Parameters: n/a</li>
           <li>Body: user data in JSON format</li>
-          <li>Example: <pre>
+          <li>
+            Example:
+            <pre>
             {
-              "Name": "Vera"
+              "username": "exampleJoe",
+              "password": "examplePass",
+              "email": "joe@example.com",
+              "birthday": "10/29/90"
             }
-          </pre></li>
+          </pre
+            >
+          </li>
         </ul>
         <li>Response:</li>
         <ul>
@@ -278,8 +296,16 @@
           <li>
             Example:
             <pre>
-              ...
-          </pre>
+              {
+                "username":"exampleJoe",
+              "password":"examplePass",
+              "email":"joe@example.com",
+              "birthday":"1990-10-29T05:00:00.000Z",
+              "favoritemovies":[],
+              "_id":"659d93b0a502d2f4f192418d","__v":0
+            }
+          </pre
+            >
           </li>
         </ul>
       </ul>
@@ -289,31 +315,45 @@
       <ul>
         <li>Description:</li>
         <ul>
-          <li>
-            Update data in Users array
-          </li>
+          <li>Update data in Users array</li>
         </ul>
-        <li>URL Endpoint: /users/:id</li>
+        <li>URL Endpoint: /users/:username</li>
         <li>Requests:</li>
         <ul>
           <li>Method: PUT</li>
-          <li>Query Parameters: user id</li>
-          <li>Body: the data you wish to update, user name</li>
-          <li>Example: <pre>
+          <li>Query Parameters: user's username</li>
+          <li>Body: the data you wish to update, username</li>
+          <li>
+            Example:
+            <pre>
             {
-              "Name": "Joe"
+              "username": "exampleJoe2",
+              "password": "examplePass2",
+              "email": "joe2@example.com",
+              "birthday": "10/29/92"
             }
-          </pre></li>
+          </pre
+            >
+          </li>
         </ul>
         <li>Response:</li>
         <ul>
-          <li>Status: 200</li>
+          <li>Status: 201</li>
           <li>Format: JSON</li>
           <li>
             Example:
             <pre>
-            ...
-          </pre>
+              {
+                "_id": "659d93b0a502d2f4f192418d",
+                "username": "exampleJoe2",
+                "password": "examplePass2",
+                "email": "joe2@example.com",
+                "birthday": "1992-10-29T05:00:00.000Z",
+                "favoritemovies": [],
+                "__v": 0
+            }
+          </pre
+            >
           </li>
         </ul>
       </ul>
@@ -323,26 +363,35 @@
       <ul>
         <li>Description:</li>
         <ul>
-          <li>
-            Add movie data to user favoriteMovies
-          </li>
+          <li>Add movie data to user favoriteMovies</li>
         </ul>
-        <li>URL Endpoint: /users/:id/:movieTitle</li>
+        <li>URL Endpoint: /users/:username/movies/:movieID</li>
         <li>Requests:</li>
         <ul>
           <li>Method: PUT</li>
-          <li>Query Parameters: user id and title of a movie</li>
+          <li>Query Parameters: username and movie ID</li>
           <li>Body: n/a</li>
         </ul>
         <li>Response:</li>
         <ul>
-          <li>Status: 200</li>
-          <li>Format: confirmation message</li>
+          <li>Status: 201</li>
+          <li>Format: res.json(updatedUser)</li>
           <li>
             Example:
             <pre>
-            ...
-          </pre>
+              {
+                "_id": "659d93b0a502d2f4f192418d",
+                "username": "exampleJoe2",
+                "password": "examplePass2",
+                "email": "joe2@example.com",
+                "birthday": "1992-10-29T05:00:00.000Z",
+                "favoritemovies": [
+                    "6599762532af30fe9ba40399",
+                    "6599752d32af30fe9ba40392"
+                ],
+            }
+          </pre
+            >
           </li>
         </ul>
       </ul>
@@ -352,26 +401,35 @@
       <ul>
         <li>Description:</li>
         <ul>
-          <li>
-            REmove movie data from user favoriteMovies
-          </li>
+          <li>REmove movie data from user favoriteMovies</li>
         </ul>
-        <li>URL Endpoint: /users/:id/:movieTitle</li>
+        <li>URL Endpoint: /users/:username/movies/:movieID</li>
         <li>Requests:</li>
         <ul>
           <li>Method: DELETE</li>
-          <li>Query Parameters: user id and title of a movie</li>
+          <li>Query Parameters: username and movie ID</li>
           <li>Body: n/a</li>
         </ul>
         <li>Response:</li>
         <ul>
-          <li>Status: 200</li>
-          <li>Format: confirmation message</li>
+          <li>Status: 201</li>
+          <li>Format: res.json(updatedUser)</li>
           <li>
             Example:
             <pre>
-            ...
-          </pre>
+              {
+                "_id": "659d93b0a502d2f4f192418d",
+                "username": "exampleJoe2",
+                "password": "examplePass2",
+                "email": "joe2@example.com",
+                "birthday": "1992-10-29T05:00:00.000Z",
+                "favoritemovies": [
+                    "6599762532af30fe9ba40399"
+                ],
+                "__v": 0
+            }
+          </pre
+            >
           </li>
         </ul>
       </ul>
@@ -381,15 +439,13 @@
       <ul>
         <li>Description:</li>
         <ul>
-          <li>
-            Remove user data from the users array
-          </li>
+          <li>Remove user data from the users array</li>
         </ul>
-        <li>URL Endpoint: /users/:id</li>
+        <li>URL Endpoint: /users/:username</li>
         <li>Requests:</li>
         <ul>
           <li>Method: DELETE</li>
-          <li>Query Parameters: user id</li>
+          <li>Query Parameters: user's username</li>
           <li>Body: n/a</li>
         </ul>
         <li>Response:</li>
@@ -399,12 +455,12 @@
           <li>
             Example:
             <pre>
-            ...
-          </pre>
+            'exampleJoe2 was deleted.'
+          </pre
+            >
           </li>
         </ul>
       </ul>
     </div>
-
   </body>
 </html>
