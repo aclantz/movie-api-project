@@ -18,6 +18,7 @@ mongoose.connect("mongodb://127.0.0.1/cfDB", {
 
 //middleware
 app.use(bodyParser.json()); //does this need to change to exercise 2.9 version,  app.use(bodyParser.urlencoded({ extend: true }));
+app.use(bodyParser.urlencoded({ extend: true }));
 let auth = require("./auth")(app);
 
 //READ, return movies array, updated*
@@ -36,7 +37,7 @@ app.get(
   }
 );
 
-//READ, return data about specific movie, updated*
+//READ, return data about specific movie
 app.get(
   "/movies/:title",
   passport.authenticate("jwt", { session: false }),
@@ -57,7 +58,7 @@ app.get(
   "/movies/genre/:genreName",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    await Movies.find({ "Genre.Name": req.params.genreName })
+    await Movies.findOne({ "Genre.Name": req.params.genreName })
       .then((movie) => {
         res.status(200).json(movie.Genre);
       })
@@ -73,7 +74,7 @@ app.get(
   "/movies/director/:directorName",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    await Movies.find({ "Director.Name": req.params.directorName })
+    await Movies.findOne({ "Director.Name": req.params.directorName })
       .then((movie) => {
         res.status(200).json(movie.Director);
       })
@@ -84,7 +85,7 @@ app.get(
   }
 );
 
-//CREATE, register a new user, updated*
+//CREATE, register a new user, no auth.
 app.post("/users", async (req, res) => {
   await Users.findOne({ username: req.body.username })
     .then((user) => {
@@ -112,11 +113,16 @@ app.post("/users", async (req, res) => {
     });
 });
 
-//UPDATE, change user name, updated*
+//UPDATE, change user name, extra auth.
 app.put(
   "/users/:username",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
+    //condition to check if username matches 
+    if (req.username !== req.params.username){
+      return res.status(400).send('Permission denied.')
+    }
+    //continuing to function
     await Users.findOneAndUpdate(
       { username: req.params.username },
       {
