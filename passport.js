@@ -10,7 +10,7 @@ let Users = Models.User,
 passport.use(
   new LocalStrategy(
     {
-      usernameField: "username", //check if capitalized, or based off model.users?
+      usernameField: "username", //not capitalized, based off model.users
       passwordField: "password",
     },
     async (username, password, callback) => {
@@ -22,6 +22,10 @@ passport.use(
             return callback(null, false, {
               message: "Incorrect username and password.",
             });
+          }
+          if (!user.validatePassword(password)) { // added to hash password
+            console.log('incorrect password');
+            return callback(null, false, { message: 'Incorrect password.' });
           }
           console.log("finished");
           return callback(null, user);

@@ -12,6 +12,8 @@ const app = express(),
 const passport = require("passport");
 require("./passport");
 
+const { check, validationResult } = require('express-validator');
+
 mongoose.connect("mongodb://127.0.0.1/cfDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -87,8 +89,20 @@ app.get(
   }
 );
 
-//CREATE, register a new user, no auth.
-app.post("/users", async (req, res) => {
+//CREATE, register a new user, no auth. New validation added
+app.post("/users", [
+  check('username', 'Username is required.').isLength({min: 5}),
+  check('username', 'Username conatins non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('password', 'Password is required.').not().isEmpty(),
+  check('email', 'Email does not appear to be valid.').isEmail()
+], async (req, res) => {
+  //check validation object for errors
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  let hashedPassword = Users.hashPassword(req.body.password);// added to hash password
   await Users.findOne({ username: req.body.username })
     .then((user) => {
       if (user) {
@@ -96,7 +110,7 @@ app.post("/users", async (req, res) => {
       } else {
         Users.create({
           username: req.body.username,
-          password: req.body.password,
+          password: hashedPassword,
           email: req.body.email,
           birthday: req.body.birthday,
         })
@@ -209,7 +223,8 @@ app.delete(
   }
 );
 
-//listen for requests
-app.listen(8080, () => {
-  console.log("Your app is listening on port 8080");
+//listen for requests, updated*
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on Port ' + port);
 });
