@@ -2,6 +2,7 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   uuid = require("uuid"),
   mongoose = require("mongoose"),
+  cors = require('cors'),
   Models = require("./models");
 
 const app = express(),
@@ -17,11 +18,12 @@ mongoose.connect("mongodb://127.0.0.1/cfDB", {
 });
 
 //middleware
-app.use(bodyParser.json()); //does this need to change to exercise 2.9 version,  app.use(bodyParser.urlencoded({ extend: true }));
+app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extend: true }));
+app.use(cors()); //cross-Origin Resource Sharing
 let auth = require("./auth")(app);
 
-//READ, return movies array, updated*
+//READ, return movies array, 
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
@@ -53,7 +55,7 @@ app.get(
   }
 );
 
-//READ, return data about genres ***
+//READ, return data about genres 
 app.get(
   "/movies/genre/:genreName",
   passport.authenticate("jwt", { session: false }),
@@ -69,7 +71,7 @@ app.get(
   }
 );
 
-//READ, return data about director ***
+//READ, return data about director
 app.get(
   "/movies/director/:directorName",
   passport.authenticate("jwt", { session: false }),
@@ -145,7 +147,7 @@ app.put(
   }
 );
 
-//UPDATE, add movie to user favoriteMovies array, updated*
+//UPDATE, add movie to user favoriteMovies array
 app.put(
   "/users/:username/movies/:movieID",
   passport.authenticate("jwt", { session: false }),
@@ -167,7 +169,7 @@ app.put(
   }
 );
 
-//DELETE, remove movie from user favoriteMovies array, updated*
+//DELETE, remove movie from user favoriteMovies array
 app.delete(
   "/users/:username/movies/:movieID",
   passport.authenticate("jwt", { session: false }),
@@ -189,7 +191,7 @@ app.delete(
   }
 );
 
-//DELETE, deregister a user, updated*
+//DELETE, deregister a user, 
 app.delete(
   "/users/:username",
   passport.authenticate("jwt", { session: false }),
