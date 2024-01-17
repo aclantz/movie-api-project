@@ -29,6 +29,11 @@ app.use(bodyParser.urlencoded({ extend: true }));
 app.use(cors()); //cross-Origin Resource Sharing
 let auth = require("./auth")(app);
 
+//READ, welcome page
+app.get('/', (req, res) => {
+  res.status(200).send('Welcome to my movie app!');
+})
+
 //READ, return movies array,
 app.get(
   "/movies",
@@ -238,5 +243,4 @@ app.delete(
 const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);
-  print('Movies!');
 });
