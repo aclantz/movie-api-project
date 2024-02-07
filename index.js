@@ -34,10 +34,10 @@ app.get('/', (req, res) => {
   res.status(200).send('Welcome to my movie app!');
 })
 
-//READ, return movies array,
+//READ, return movies array, adjusted for TASK 3.4 ***
 app.get(
   "/movies",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Movies.find()
       .then((moviesList) => {
