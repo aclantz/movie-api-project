@@ -4,7 +4,9 @@ const express = require("express"),
   mongoose = require("mongoose"),
   cors = require("cors"),
   Models = require("./models");
+  const dotenv = require("dotenv");
 
+  dotenv.config();
 const app = express(),
   Movies = Models.Movie,
   Users = Models.User;
@@ -14,14 +16,14 @@ require("./passport");
 
 const { check, validationResult } = require("express-validator");
 
-mongoose.connect(process.env.CONNECTION_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-// mongoose.connect("mongodb://127.0.0.1/cfDB", {
+// mongoose.connect(process.env.CONNECTION_URI, {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
+mongoose.connect("mongodb://127.0.0.1/cfDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 //middleware
 app.use(bodyParser.json());
@@ -32,7 +34,7 @@ let auth = require("./auth")(app);
 //READ, welcome page
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to my movie app!');
-})
+});
 
 //READ, return movies array,
 app.get(
