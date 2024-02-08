@@ -27,7 +27,7 @@ mongoose.connect(process.env.CONNECTION_URI, {
 
 //middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extend: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors()); //cross-Origin Resource Sharing
 let auth = require("./auth")(app);
 
