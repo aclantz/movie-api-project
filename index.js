@@ -52,10 +52,10 @@ app.get(
   }
 );
 
-//READ, return data about specific movie
+//READ, return data about specific movie, adjusted for 3.4
 app.get(
   "/movies/:title",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Movies.find({ Title: req.params.title })
       .then((movie) => {
