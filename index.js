@@ -4,9 +4,9 @@ const express = require("express"),
   mongoose = require("mongoose"),
   cors = require("cors"),
   Models = require("./models");
-  const dotenv = require("dotenv");
+  // const dotenv = require("dotenv");
 
-  dotenv.config();
+  // dotenv.config();
 const app = express(),
   Movies = Models.Movie,
   Users = Models.User;
