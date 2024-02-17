@@ -36,10 +36,10 @@ app.get('/', (req, res) => {
   res.status(200).send('Welcome to my movie app!');
 });
 
-//READ, return movies array,
+//READ, return movies array, adjusted for 3.4
 app.get(
   "/movies",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Movies.find()
       .then((moviesList) => {
@@ -52,10 +52,10 @@ app.get(
   }
 );
 
-//READ, return data about specific movie, adjusted for 3.4
+//READ, return data about specific movie
 app.get(
   "/movies/:title",
-  // passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Movies.find({ Title: req.params.title })
       .then((movie) => {
