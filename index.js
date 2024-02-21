@@ -24,6 +24,10 @@ mongoose.connect(process.env.CONNECTION_URI, {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
+// mongoose.connect("mongodb+srv://alexclantz:lan9tern56@lantzdevdb.pv1bqez.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
 //middleware
 app.use(bodyParser.json());
@@ -107,7 +111,7 @@ app.post(
     check("username", "Username is required.").isLength({ min: 5 }),
     check(
       "username",
-      "Username conatins non alphanumeric characters - not allowed."
+      "Username contains non alphanumeric characters - not allowed."
     ).isAlphanumeric(),
     check("password", "Password is required.").not().isEmpty(),
     check("email", "Email does not appear to be valid.").isEmail(),
