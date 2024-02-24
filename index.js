@@ -24,6 +24,10 @@ mongoose.connect(process.env.CONNECTION_URI, {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
+// mongoose.connect("mongodb+srv://alexclantz:lan9tern56@lantzdevdb.pv1bqez.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
 //middleware
 app.use(bodyParser.json());
@@ -36,7 +40,7 @@ app.get('/', (req, res) => {
   res.status(200).send('Welcome to my movie app!');
 });
 
-//READ, return movies array,
+//READ, return movies array
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
@@ -107,7 +111,7 @@ app.post(
     check("username", "Username is required.").isLength({ min: 5 }),
     check(
       "username",
-      "Username conatins non alphanumeric characters - not allowed."
+      "Username contains non alphanumeric characters - not allowed."
     ).isAlphanumeric(),
     check("password", "Password is required.").not().isEmpty(),
     check("email", "Email does not appear to be valid.").isEmail(),
