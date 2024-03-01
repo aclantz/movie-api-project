@@ -248,7 +248,7 @@ app.delete(
 //READ, return array of users data
 app.get(
   "/users",
-  // passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Users.find()
       .then((usersList) => {
