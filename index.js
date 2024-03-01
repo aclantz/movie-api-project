@@ -245,6 +245,22 @@ app.delete(
   }
 );
 
+//READ, return array of users data
+app.get(
+  "/users",
+  // passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    await Users.find()
+      .then((usersList) => {
+        res.status(201).json(usersList);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send("Error:" + err);
+      });
+  }
+);
+
 //listen for requests, updated*
 const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
