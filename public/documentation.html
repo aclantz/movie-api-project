@@ -99,6 +99,12 @@
           <td>/users/:username</td>
           <td>confirmation message</td>
         </tr>
+        <tr>
+          <td>Return list of all users</td>
+          <td>GET</td>
+          <td>/users</td>
+          <td>res.json(users)</td>
+        </tr>
       </tbody>
     </table>
     <h3>Request and Response Breakdown:</h3>
@@ -456,6 +462,55 @@
             Example:
             <pre>
             'exampleJoe2 was deleted.'
+          </pre
+            >
+          </li>
+        </ul>
+      </ul>
+    </div>
+    <div>
+      <h4>Return List of All Users</h4>
+      <ul>
+        <li>Description:</li>
+        <ul>
+          <li>
+            Return the full array of users on the myFlix application, in a JSON
+            format.
+          </li>
+        </ul>
+        <li>URL Endpoint: /users</li>
+        <li>Requests:</li>
+        <ul>
+          <li>Method: GET</li>
+          <li>Query Parameters: n/a</li>
+          <li>Body: n/a</li>
+        </ul>
+        <li>Response:</li>
+        <ul>
+          <li>Status: 201</li>
+          <li>Format: JSON</li>
+          <li>
+            Example:
+            <pre>
+            [
+            {
+              "_id": "659d93b0a502d2f4f192418d",
+                "username": "exampleJoe2",
+                "password": "examplePass2",
+                "email": "joe2@example.com",
+                "birthday": "1992-10-29T05:00:00.000Z",
+                "favoritemovies": [
+                    "6599762532af30fe9ba40399"
+                ],
+                "__v": 0
+          },
+              {
+                ...
+              },
+              {
+                ...
+              }
+            ]
           </pre
             >
           </li>
