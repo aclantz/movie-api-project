@@ -157,7 +157,7 @@ app.put(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     //condition to check if username matches
-    if (req.username !== req.params.username) {
+    if (req.user.username !== req.params.username) { // added .user in req.user.username to make endpoint work?
       return res.status(400).send("Permission denied.");
     }
     //continuing to function
