@@ -16,7 +16,6 @@ let generateJWTToken = (user) => {
     });
 }
 
-//post login
 /**
  * Login endpoint
  * POST
