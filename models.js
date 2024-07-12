@@ -3,6 +3,7 @@ bcrypt = require('bcrypt');
 
 /**
  * Movie Schema
+ * @summary define a schema for movie data
  */
 let movieSchema = mongoose.Schema({
   Title: { type: String, required: true },
@@ -22,6 +23,7 @@ let movieSchema = mongoose.Schema({
 
 /**
  * User Schema
+ * @summary define a schema for user data
  */
 let userSchema = mongoose.Schema({
   username: { type: String, required: true },

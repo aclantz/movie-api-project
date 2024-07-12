@@ -33,17 +33,22 @@ mongoose.connect(process.env.CONNECTION_URI, {
 // });
 
 /**
- * Middleware functions, managing JSON, URL encoding, and CORS 
+ * Middleware functions:
+ * managing JSON 
+ * URL encoding 
+ * CORS 
  */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors()); //cross-Origin Resource Sharing
+
 let auth = require("./auth")(app);
 
 /**
  * Welcome page endpoint
- * GET 
- * @returns welcome page
+ * GET /
+ * @summary Returns the welcome page.
+ * @returns {string} 200 - Welcome message
  */
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to my movie app!');
@@ -51,9 +56,12 @@ app.get('/', (req, res) => {
 
 /**
  * All movies endpoint
- * GET
+ * GET /movies
+ * @summary Retrieves a list of all movies.
  * @async
- * @returns {JSON} list of all movies
+ * @security jwt
+ * @returns {Array.<Movie>} 200 - List of movies
+ * @returns {Error}  500 - Unexpected error
  */
 app.get(
   "/movies",
@@ -72,10 +80,14 @@ app.get(
 
 /**
  * Specific movie endpoint
- * GET
+ * GET /movies/{title}
+ * @summary Retrieves details of a specific movie.
  * @async
- * @param {string} movie.title
- * @returns {JSON} one movie
+ * @security jwt
+ * @param {string} title.path.required - The title of the movie
+ * @returns {Movie} 200 - Movie details
+ * @returns {Error}  404 - Movie not found
+ * @returns {Error}  500 - Unexpected error
  */
 app.get(
   "/movies/:title",
@@ -94,10 +106,14 @@ app.get(
 
 /**
  * Genre endpoint
- * GET
+ * GET /movies/genre/{genreName}
+ * @summary Retrieves details of a specific genre.
  * @async
- * @param {string} genre.Name
- * @returns {JSON} specific genre
+ * @security jwt
+ * @param {string} genreName.path.required - The name of the genre
+ * @returns {Genre} 200 - Genre details
+ * @returns {Error}  404 - Genre not found
+ * @returns {Error}  500 - Unexpected error
  */
 app.get(
   "/movies/genre/:genreName",
@@ -116,10 +132,14 @@ app.get(
 
 /**
  * Director endpoint
- * GET
+ * GET /movies/director/{directorName}
+ * @summary Retrieves details of a specific director.
  * @async
- * @param {string} director.name
- * @returns {JSON} specific director
+ * @security jwt
+ * @param {string} directorName.path.required - The name of the director
+ * @returns {Director} 200 - Director details
+ * @returns {Error}  404 - Director not found
+ * @returns {Error}  500 - Unexpected error
  */
 app.get(
   "/movies/director/:directorName",
@@ -138,13 +158,17 @@ app.get(
 
 /**
  * Create a new User endpoint
- * POST
+ * POST /users
+ * @summary Creates a new user.
  * @async
- * @param {string} username
- * @param {string} password
- * @param {string} email
- * @param {string} birthday
- * @returns {JSON} new user object
+ * @param {string} username.body.required - The username of the new user
+ * @param {string} password.body.required - The password of the new user
+ * @param {string} email.body.required - The email of the new user
+ * @param {string} birthday.body - The birthday of the new user
+ * @returns {User} 201 - New user created
+ * @returns {Error}  400 - Username already exists
+ * @returns {Error}  422 - Validation error
+ * @returns {Error}  500 - Unexpected error
  */
 app.post(
   "/users",
@@ -194,14 +218,18 @@ app.post(
 
 /**
  * Edit user endpoint
- * PUT
- * extra Auth
+ * PUT /users/{username}
+ * @summary Updates a user's information.
  * @async
- * @param {string} username 
- * @param {string} password
- * @param {string} email 
- * @param {string} birthday
- * @returns {JSON} updated user object
+ * @security jwt
+ * @param {string} username.path.required - The username of the user
+ * @param {string} username.body - The new username
+ * @param {string} password.body - The new password
+ * @param {string} email.body - The new email
+ * @param {string} birthday.body - The new birthday
+ * @returns {User} 200 - Updated user
+ * @returns {Error}  400 - Permission denied
+ * @returns {Error}  500 - Unexpected error
  */
 app.put(
   "/users/:username",
@@ -237,10 +265,15 @@ app.put(
 
 /**
  * Add to favoriteMovies array endpoint
- * PUT
+ * PUT /users/{username}/movies/{movieID}
+ * @summary Adds a movie to a user's list of favorite movies.
  * @async
- * @param {string} movie._id
- * @returns {JSON} updated user object 
+ * @security jwt
+ * @param {string} username.path.required - The username of the user
+ * @param {string} movieID.path.required - The ID of the movie
+ * @returns {User} 200 - Updated user with new favorite movie
+ * @returns {Error}  400 - Unexpected error
+ * @returns {Error}  500 - Unexpected error
  */
 app.put(
   "/users/:username/movies/:movieID",
@@ -263,12 +296,18 @@ app.put(
   }
 );
 
+
 /**
- * Remove from favoriteMovie array endpoint
- * DELETE
+ * Remove from favoriteMovies array endpoint
+ * DELETE /users/{username}/movies/{movieID}
+ * @summary Removes a movie from a user's list of favorite movies.
  * @async
- * @param {string} movie._id
- * @returns {JSON} updated user object
+ * @security jwt
+ * @param {string} username.path.required - The username of the user
+ * @param {string} movieID.path.required - The ID of the movie
+ * @returns {User} 200 - Updated user favorite movie list
+ * @returns {Error}  400 - Unexpected error
+ * @returns {Error}  500 - Unexpected error
  */
 app.delete(
   "/users/:username/movies/:movieID",
@@ -293,10 +332,14 @@ app.delete(
 
 /**
  * Unregister a User endpoint
- * DELETE
+ * DELETE users/{userName}
+ * @summary Delete a user profile form the database
  * @async
+ * @security jwt
  * @param {string} username
- * @returns {string} username + message
+ * @returns {string} 200 - {username} deleted
+ * @returns {string} 400 - {username} not found
+ * @returns {string} 400 - unexpected error
  */
 app.delete(
   "/users/:username",
@@ -318,8 +361,11 @@ app.delete(
 /**
  * Array of all users endpoint
  * GET
+ * @summary retrieve a list of all users in database
  * @async
- * @returns {JSON} list of users
+ * @security jwt
+ * @returns {JSON} 201 - list of users
+ * @returns {string} 500 - unexpected error
  */
 app.get(
   "/users",

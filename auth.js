@@ -18,7 +18,8 @@ let generateJWTToken = (user) => {
 
 /**
  * Login endpoint
- * POST
+ * POST /login
+ * @summary allow a registered user to login, retrieving a token and user data
  * @param {string} username
  * @param {string} password
  * @return {JSON} user object, token
