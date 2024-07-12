@@ -29,18 +29,29 @@ mongoose.connect(process.env.CONNECTION_URI, {
 //   useUnifiedTopology: true,
 // });
 
-//middleware
+/**
+ * Middleware functions, managing JSON, URL encoding, and CORS 
+ */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors()); //cross-Origin Resource Sharing
 let auth = require("./auth")(app);
 
-//READ, welcome page
+/**
+ * Welcome page endpoint
+ * GET 
+ * @returns welcome page
+ */
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to my movie app!');
 });
 
-//READ, return movies array
+/**
+ * All movies endpoint
+ * GET
+ * @async
+ * @returns {JSON} list of all movies
+ */
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
@@ -56,7 +67,13 @@ app.get(
   }
 );
 
-//READ, return data about specific movie
+/**
+ * Specific movie endpoint
+ * GET
+ * @async
+ * @param {string} movie.title
+ * @returns {JSON} one movie
+ */
 app.get(
   "/movies/:title",
   passport.authenticate("jwt", { session: false }),
@@ -72,7 +89,13 @@ app.get(
   }
 );
 
-//READ, return data about genres
+/**
+ * Genre endpoint
+ * GET
+ * @async
+ * @param {string} genre.Name
+ * @returns {JSON} specific genre
+ */
 app.get(
   "/movies/genre/:genreName",
   passport.authenticate("jwt", { session: false }),
@@ -88,7 +111,13 @@ app.get(
   }
 );
 
-//READ, return data about director
+/**
+ * Director endpoint
+ * GET
+ * @async
+ * @param {string} director.name
+ * @returns {JSON} specific director
+ */
 app.get(
   "/movies/director/:directorName",
   passport.authenticate("jwt", { session: false }),
@@ -104,7 +133,16 @@ app.get(
   }
 );
 
-//CREATE, register a new user, no auth. New validation added
+/**
+ * Create a new User endpoint
+ * POST
+ * @async
+ * @param {string} username
+ * @param {string} password
+ * @param {string} email
+ * @param {string} birthday
+ * @returns {JSON} new user object
+ */
 app.post(
   "/users",
   [
@@ -151,7 +189,17 @@ app.post(
   }
 );
 
-//UPDATE, change user name, extra auth.
+/**
+ * Edit user endpoint
+ * PUT
+ * extra Auth
+ * @async
+ * @param {string} username 
+ * @param {string} password
+ * @param {string} email 
+ * @param {string} birthday
+ * @returns {JSON} updated user object
+ */
 app.put(
   "/users/:username",
   passport.authenticate("jwt", { session: false }),
@@ -184,7 +232,13 @@ app.put(
   }
 );
 
-//UPDATE, add movie to user favoriteMovies array
+/**
+ * Add to favoriteMovies array endpoint
+ * PUT
+ * @async
+ * @param {string} movie._id
+ * @returns {JSON} updated user object 
+ */
 app.put(
   "/users/:username/movies/:movieID",
   passport.authenticate("jwt", { session: false }),
@@ -206,7 +260,13 @@ app.put(
   }
 );
 
-//DELETE, remove movie from user favoriteMovies array
+/**
+ * Remove from favoriteMovie array endpoint
+ * DELETE
+ * @async
+ * @param {string} movie._id
+ * @returns {JSON} updated user object
+ */
 app.delete(
   "/users/:username/movies/:movieID",
   passport.authenticate("jwt", { session: false }),
@@ -228,7 +288,13 @@ app.delete(
   }
 );
 
-//DELETE, deregister a user,
+/**
+ * Unregister a User endpoint
+ * DELETE
+ * @async
+ * @param {string} username
+ * @returns {string} username + message
+ */
 app.delete(
   "/users/:username",
   passport.authenticate("jwt", { session: false }),
@@ -246,7 +312,12 @@ app.delete(
   }
 );
 
-//READ, return array of users data
+/**
+ * Array of all users endpoint
+ * GET
+ * @async
+ * @returns {JSON} list of users
+ */
 app.get(
   "/users",
   passport.authenticate("jwt", { session: false }),
@@ -262,7 +333,9 @@ app.get(
   }
 );
 
-//listen for requests, updated*
+/**
+ * Listen for requests
+ */
 const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);

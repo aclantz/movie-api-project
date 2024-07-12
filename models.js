@@ -1,6 +1,9 @@
 const mongoose = require("mongoose"),
 bcrypt = require('bcrypt');
 
+/**
+ * Movie Schema
+ */
 let movieSchema = mongoose.Schema({
   Title: { type: String, required: true },
   Description: { type: String, required: true },
@@ -17,6 +20,9 @@ let movieSchema = mongoose.Schema({
   Featured: Boolean,
 });
 
+/**
+ * User Schema
+ */
 let userSchema = mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
@@ -25,10 +31,19 @@ let userSchema = mongoose.Schema({
   favoritemovies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Movie" }],
 });
 
-//hashing password functions
+/**
+ * Hashing password function
+ * @param {string} password 
+ * @returns encrypted password
+ */
 userSchema.statics.hashPassword = (password) => {
   return bcrypt.hashSync(password, 10);
 }
+/**
+ * Validates password by comparing to encrypted password
+ * @param {string} password 
+ * @returns validation
+ */
 userSchema.methods.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 }
